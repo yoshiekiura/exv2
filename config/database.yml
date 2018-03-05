@@ -1,17 +1,9 @@
-development: &defaults
+production:
   adapter: mysql2
   encoding: utf8
-  database: peatio_development
+  database: peatio
   username: peatio
   password: peatio
   pool: 10
   reconnect: true
   host: mysql
-
-test:
-  <<: *defaults
-  database: peatio_test
-
-production:
-  <<: *defaults
-  database: peatio
