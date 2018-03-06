@@ -99,3 +99,7 @@ group :test do
   # but test-unit has been removed from ruby core since 2.2.0
   gem 'test-unit'
 end
+
+group :production do
+  gem 'puma'
+end
