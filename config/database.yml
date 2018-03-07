@@ -1,9 +1,9 @@
 production:
   adapter: mysql2
   encoding: utf8
-  database: peatio
-  username: peatio
-  password: peatio
+  database: <%= ENV["MYSQL_DATABASE"] %>
+  username: <%= ENV["MYSQL_USER"] %>
+  password: <%= ENV["MYSQL_PASSWORD"] %>
   pool: 10
   reconnect: true
-  host: mysql
+  host: <%= ENV["MYSQL_HOST"] %>
