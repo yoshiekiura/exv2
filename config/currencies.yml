@@ -17,7 +17,7 @@
   symbol: "฿"
   coin: true
   quick_withdraw_max: 0
-  rpc: http://peatio:peatio@bitcoin:9333
+  rpc: <%= "http://#{ENV['RPCUSER']}:#{ENV['RPCPASS']}@#{ENV['RPCHOST']}:#{ENV['RPCUSER']}" %>
   blockchain: https://blockchain.info/tx/#{txid}
   address_url: https://blockchain.info/address/#{address}
   assets:
