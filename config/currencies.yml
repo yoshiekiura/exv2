@@ -17,6 +17,7 @@
   symbol: "฿"
   coin: true
   quick_withdraw_max: 0
+  family: BTC
   rpc: ${rpc_url}
   blockchain: https://blockchain.info/tx/#{txid}
   address_url: https://blockchain.info/address/#{address}
@@ -30,8 +31,10 @@
   symbol: "฿"
   coin: true
   precision: 4
+  family: ETH
   quick_withdraw_max: 0
   rpc: http://Your_eth_server_ip
+  main_address: YOUR_BASE_ADDRESS
   blockchain: https://etherscan.io/tx/#{txid}
   address_url: https://etherscan.io/address/#{address}
   assets:
