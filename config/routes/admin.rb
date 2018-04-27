@@ -40,4 +40,8 @@ namespace :admin do
     resource :deposits, :only => :show
     resource :withdraws, :only => :show
   end
+
 end
+
+get "/uploads/asset/:filetype/file/:id/:filename.:extension" , controller: "private_assets" , action: "download"
+
