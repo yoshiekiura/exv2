@@ -1,0 +1,19 @@
+FROM nginx
+
+RUN apt-get update -qq && apt-get -y install apache2-utils
+
+COPY ./app/peatio /peatio
+
+RUN rm -rf /etc/nginx/sites-available/default
+RUN rm -rf /etc/nginx/sites-enabled/default
+RUN rm -rf /etc/nginx/conf.d/default.conf
+ARG DOMAIN
+ENV DOMAIN=$DOMAIN
+COPY config/nginx.conf /etc/nginx/conf.d/peatio.conf
+RUN sed -e "s/\${domain}/$DOMAIN/" -i /etc/nginx/conf.d/peatio.conf
+COPY ./ssl_certs /ssl_certs
+
+RUN mkdir /logs
+VOLUME ["/logs"]
+
+CMD [ "nginx", "-g", "daemon off;" ]

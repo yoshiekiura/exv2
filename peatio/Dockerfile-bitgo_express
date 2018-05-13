@@ -1,0 +1,14 @@
+FROM node:9-slim
+RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommends build-essential git nginx
+RUN mkdir bitgo-express \
+ && cd bitgo-express 
+#RUN npm init 
+RUN npm install bitgo
+
+RUN rm -rf /etc/nginx/sites-available/default
+RUN rm -rf /etc/nginx/sites-enabled/default
+RUN rm -rf /etc/nginx/conf.d/default.conf
+COPY config/bitgo-express.conf /etc/nginx/conf.d/
+
+COPY bitgo_express.sh ./
+CMD ./node_modules/bitgo/bin/bitgo-express

@@ -1,0 +1,114 @@
+version: '3'
+services:
+ redis:
+   image: redis:3.0.5
+   volumes:
+     - ./redis-data:/var/lib/redis/data
+   networks:
+    peatio-static:
+     ipv4_address: 172.19.0.11
+
+ rabbitmq:
+   image: rabbitmq:3.7.3
+   hostname: peatio
+   volumes:
+     - ./rabbit-data:/var/lib/rabbitmq
+   networks:
+    peatio-static:
+     ipv4_address: 172.19.0.10
+   deploy:
+    restart_policy:
+     condition: on-failure
+
+ mysql:
+   image: mysql:5.7.21
+   environment:
+     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+     MYSQL_DATABASE: ${MYSQL_DATABASE}
+     MYSQL_USER: ${MYSQL_USER}
+     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+   volumes:
+     - ./mysql-data:/var/lib/mysql
+   networks:
+    peatio-static:
+     ipv4_address: 172.19.0.9
+
+ peatio:
+   build:
+    context: .
+    args:
+     PHANTOMJS_VERISON: ${PHANTOMJS_VERISON}
+     RPCUSER: ${RPCUSER}
+     RPCPASS: ${RPCPASS}
+     RPCHOST: ${RPCHOST}
+     RPCPORT: ${RPCPORT}
+     DOMAIN: ${DOMAIN}
+   stdin_open: true
+   #tty: true
+   networks:
+    peatio-static:
+     ipv4_address: ${IP}
+   environment:
+     MYSQL_DATABASE: ${MYSQL_DATABASE}
+     MYSQL_USER: ${MYSQL_USER}
+     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+     MYSQL_HOST: ${MYSQL_HOST}
+     SMTP_PORT: ${SMTP_PORT}
+     SMTP_DOMAIN: ${SMTP_DOMAIN}
+     SMTP_ADDRESS: ${SMTP_ADDRESS}
+     SMTP_USERNAME: ${SMTP_USERNAME}
+     SMTP_PASSWORD: ${SMTP_PASSWORD}
+     SMTP_AUTHENTICATION: ${SMTP_AUTHENTICATION}
+     RPCUSER: ${RPCUSER}
+     RPCPASS: ${RPCPASS}
+     DOMAIN: ${DOMAIN}
+     IP: ${IP}
+     DOMAIN: ${DOMAIN}
+     RPCHOST: ${RPCHOST}
+     RPCPORT: ${RPCPORT}
+     LISTEN_ON: 0.0.0.0:3000
+     WORKER_PROCESSES: 2
+   #  SECRET_TOKEN: ${RAILS_SECRET_TOKEN} 
+   command: bash
+   links:
+     - mysql
+     - rabbitmq
+     - redis
+     - bitcoin
+   volumes:
+     - "./app/peatio:/peatio" 
+
+ bitcoin:
+  build:
+   context: ../bitcoin/.
+   args:
+    RPCUSER: ${RPCUSER}
+    RPCPASS: ${RPCPASS}
+    DOMAIN: ${DOMAIN}
+    IP: ${IP}
+  stdin_open: true
+  tty: true
+  networks:
+   peatio-static:
+    ipv4_address: 172.19.0.12
+
+ nginx:
+  build:
+   context: .
+   dockerfile: Dockerfile-nginx
+   args:
+    DOMAIN: ${DOMAIN}
+  links:
+   - peatio
+  ports:
+   - '80:80'
+   - '443:443'
+  networks:
+   peatio-static:
+    ipv4_address: 172.19.0.13
+
+networks:
+  peatio-static:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16

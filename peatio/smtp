@@ -1,0 +1,7 @@
+export SMTP_PORT="25"
+export SMTP_DOMAIN="smtp.mailtrap.io"
+export SMTP_ADDRESS="smtp.mailtrap.io"
+export SMTP_USERNAME="47e321c05a1cd2"
+export SMTP_PASSWORD="8b7bf31d724208"
+export SMTP_AUTHENTICATION="CRAM-MD5"
+echo "SMTP exported"

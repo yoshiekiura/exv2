@@ -1,0 +1,8 @@
+export RPCUSER="peatio"
+sleep 1s
+export RPCPASS="peatio"
+export DOMAIN="localhost"
+export IP="172.19.0.4"
+export RPCHOST="bitcoin"
+export RPCPORT="9333"
+echo "Rpc Configs Loaded"
