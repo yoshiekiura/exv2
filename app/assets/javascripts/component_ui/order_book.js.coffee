@@ -7,6 +7,8 @@
     fade_toggle_depth: '#fade_toggle_depth'
 
   @update = (event, data) ->
+    $('#order_asks').html(data.asks)
+    $('#order_bids').html(data.bids)
     @updateOrders(@select('bidBookSel'), _.first(data.bids, @.attr.bookLimit), 'bid')
     @updateOrders(@select('askBookSel'), _.first(data.asks, @.attr.bookLimit), 'ask')
 

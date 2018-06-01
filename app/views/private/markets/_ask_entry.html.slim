@@ -1,8 +1,13 @@
 #ask_entry.panel.panel-default.entry-left
   .panel-body
-    = form_for [market, order], :remote => true do |f|
+    .row
+      .col-xs-6
+        span.ask_active_market#ask_market Market
+      .col-xs-6
+        span#ask_limit Limit
+    = form_for [order], :url => market_orders_path(market.id) , :remote => true do |f|
       = f.hidden_field :ord_type
-      .input-group.price
+      .input-group.price#ask_price
         label.input-group-addon = t('.price')
         span.label.label-danger.hint-price-disadvantage
         = f.text_field :price, class: 'form-control'
@@ -17,6 +22,4 @@
         = f.text_field :total, class: 'form-control'
         span.input-group-addon = t(market.bid['currency'], scope: 'market.currency')
       = render partial: 'balance', locals: {currency: t(market.ask['currency'], scope: 'market.currency')}
-
-      button.btn.btn-danger.btn-block.text-down type="submit" = t('.action', currency: t(market.ask['currency'], scope: 'market.currency'))
-  = render partial: 'mask'
+      = f.submit 'Sell' , :class => 'btn btn-danger btn-block text-up'
