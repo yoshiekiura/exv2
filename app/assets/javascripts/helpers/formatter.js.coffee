@@ -92,6 +92,54 @@ class Formatter
   fix_bid: (price) ->
     @.fixBid price
 
+    getAsksTotal: (volume) ->
+    console.log 'asls'
+    array = $('#order_asks').html().split(',')
+    x = 0
+    y = 0
+    t = []
+    len = array.length
+    if len !=0
+      while volume > 0
+        if x+2 > len
+          break
+        p = parseFloat(array[x])
+        v = parseFloat(array[x+1])
+        if volume < v
+          t[y] = p*volume
+        else
+          t[y] = p*v
+        volume = volume - v
+        console.log x+2+".."+len
+        x += 2
+        y+=1
+    
+    eval(t.join('+'))
+
+  getBidsTotal: (volume) ->
+    console.log 'bids'
+    array = $('#order_bids').html().split(',')
+    x = 0
+    y = 0
+    t = []
+    len = array.length
+    if len !=0
+      while volume > 0
+        if x+2 > len
+          break
+        p = parseFloat(array[x])
+        v = parseFloat(array[x+1])
+        if volume < v
+          t[y] = p*volume
+        else
+          t[y] = p*v
+        volume = volume - v
+        console.log x+2+".."+len
+        x += 2
+        y+=1
+    
+    eval(t.join('+'))
+
   amount: (amount, price) ->
     val = (new BigNumber(amount)).times(new BigNumber(price))
     @.fixAsk(val).replace(/\..*/, "<g>$&</g>")
