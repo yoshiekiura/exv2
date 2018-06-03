@@ -24,7 +24,7 @@ module Admin
       can :manage, ::Withdraws::Bank
       can :manage, ::Withdraws::Satoshi
       can :manage, ::Withdraws::Ether
-      can :download, Admin::PrivateAssetsController
+      can :download, PrivateAssetsController
 
     end
   end
