@@ -95,7 +95,6 @@ Peatio::Application.routes.draw do
       resources :orders, :only => [:index, :destroy] do
         collection do
           post :clear
-          post :create
         end
       end
       resources :order_bids, :only => [:create] do

@@ -19,17 +19,5 @@ module Private
       Ordering.new(@orders).cancel
       render status: 200, nothing: true
     end
-
-    def create
-      Rails.logger.debug "Creating this thing #{params}"
-      if params[:commit] == "Sell"
-        @order = OrderAsk.new(order_params(:order_ask))
-        order_submit
-      elsif params[:commit] == "Buy"
-        @order = OrderBid.new(order_params(:order_bid))
-        order_submit
-      end
-    end
-
   end
 end
