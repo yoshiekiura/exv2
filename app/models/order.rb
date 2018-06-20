@@ -1,9 +1,10 @@
 class Order < ActiveRecord::Base
   extend Enumerize
 
+  belongs_to :market
+
   enumerize :bid, in: Currency.enumerize
   enumerize :ask, in: Currency.enumerize
-  enumerize :currency, in: Market.enumerize, scope: true
   enumerize :state, in: {:wait => 100, :done => 200, :cancel => 0}, scope: true
 
   ORD_TYPES = %w(market limit)
@@ -34,18 +35,19 @@ class Order < ActiveRecord::Base
   scope :done, -> { with_state(:done) }
   scope :active, -> { with_state(:wait) }
   scope :position, -> { group("price").pluck(:price, 'sum(volume)') }
-  scope :best_price, ->(currency) { where(ord_type: 'limit').active.with_currency(currency).matching_rule.position }
-
+  scope :best_price, ->(currency) { where(ord_type: 'limit').active.with_market(currency).matching_rule.position }
+  scope :with_market, -> (market) { where(market: Market === market ? market : Market.find(market)) }
+  
   def funds_used
     origin_locked - locked
   end
 
   def fee
-    config[kind.to_sym]["fee"]
+    config.public_send("#{kind}_fee")
   end
 
   def config
-    @config ||= Market.find(currency)
+    @config ||= Market.find(market_id)
   end
 
   def trigger
@@ -96,20 +98,16 @@ class Order < ActiveRecord::Base
   end
 
   def self.head(currency)
-    active.with_currency(currency.downcase).matching_rule.first
+    active.with_market(currency.downcase).matching_rule.first
   end
 
   def at
     created_at.to_i
   end
 
-  def market
-    currency
-  end
-
   def to_matching_attributes
     { id: id,
-      market: market,
+      market: market.id,
       type: type[-3, 3].downcase.to_sym,
       ord_type: ord_type,
       volume: volume,
