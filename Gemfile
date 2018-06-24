@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.13'
+gem 'rails', '~> 4.2'
 gem 'rails-i18n'
 gem 'rake', '< 11.0'
 
@@ -43,15 +43,15 @@ gem 'em-websocket', '~> 0.5.1'
 
 gem 'simple_form', '~> 3.1.0'
 gem 'slim-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails'
 gem 'uglifier'
 gem "jquery-rails"
 gem "angularjs-rails"
 gem 'bootstrap-sass', '~> 3.2.0.2'
 gem 'bootstrap-wysihtml5-rails'
-gem 'font-awesome-sass'
-gem 'bourbon'
+gem 'font-awesome-sass', '~> 4.2.0'
+gem 'bourbon', '~> 3.2.3'
 gem 'momentjs-rails'
 gem 'eco'
 gem 'browser', '~> 0.8.0'
