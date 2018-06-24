@@ -839,4 +839,8 @@ table {
     display: block;
 }
 
+#order_asks, #order_bids{
+  display: none;
+}
+
 @import 'custom/market';

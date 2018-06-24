@@ -1,6 +1,6 @@
 module Private
   class OrdersController < BaseController
-
+    include Concerns::OrderCreation
     def destroy
       ActiveRecord::Base.transaction do
         order = current_user.orders.find(params[:id])
@@ -19,6 +19,5 @@ module Private
       Ordering.new(@orders).cancel
       render status: 200, nothing: true
     end
-
   end
 end

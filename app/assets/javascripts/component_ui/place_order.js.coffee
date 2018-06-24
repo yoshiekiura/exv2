@@ -147,3 +147,39 @@
     @on @select('formSel'), 'ajax:error', @handleError
 
     @on @select('currentBalanceSel'), 'click', @allIn
+  
+    $('#bid_price').hide()
+    $('#ask_price').hide()
+
+    $('#ask_limit').on 'click', =>
+      $('#ask_limit').addClass('ask_active_market')
+      $('#ask_market').removeClass('ask_active_market')
+      $('#ask_price').fadeIn()
+      $('#order_ask_ord_type').val('limit')
+    $('#ask_market').on 'click', =>
+      $('#ask_market').addClass('ask_active_market')
+      $('#ask_limit').removeClass('ask_active_market')
+      $('#ask_price').fadeOut()
+      $('#order_ask_ord_type').val('market')
+      $('#order_ask_price').val('')
+    $('#bid_limit').on 'click', =>
+      $('#bid_limit').addClass('bid_active_market')
+      $('#bid_market').removeClass('bid_active_market')
+      $('#bid_price').fadeIn()
+      $('#order_bid_ord_type').val('limit')
+    $('#bid_market').on 'click', =>
+      $('#bid_market').addClass('bid_active_market')
+      $('#bid_limit').removeClass('bid_active_market')
+      $('#bid_price').fadeOut()
+      $('#order_bid_price').val('')
+      $('#order_bid_ord_type').val('market')
+      
+    $('#order_bid_origin_volume').on 'keyup', =>
+      if $('#order_bid_ord_type').val() == 'market'
+        volume = $('#order_bid_origin_volume').val()
+        $('#order_bid_total').val formatter.getAsksTotal(volume)
+    $('#order_ask_origin_volume').on 'keyup', =>
+      if $('#order_ask_ord_type').val() == 'market'
+        volume = $('#order_ask_origin_volume').val()
+        $('#order_ask_total').val formatter.getBidsTotal(volume)
+      

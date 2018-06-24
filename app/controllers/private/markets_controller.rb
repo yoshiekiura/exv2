@@ -19,8 +19,8 @@ module Private
       @trades = @market.trades
 
       # default to limit order
-      @order_bid = OrderBid.new ord_type: 'limit'
-      @order_ask = OrderAsk.new ord_type: 'limit'
+      @order_bid = OrderBid.new ord_type: 'market'
+      @order_ask = OrderAsk.new ord_type: 'market'
 
       set_member_data if current_user
       gon.jbuilder

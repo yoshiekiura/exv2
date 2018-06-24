@@ -1,8 +1,13 @@
 #bid_entry.panel.panel-default.entry-right
   .panel-body
+    .row
+      .col-xs-6
+        span.bid_active_market#bid_market Market
+      .col-xs-6
+        span#bid_limit Limit
     = form_for [market, order], :remote => true do |f|
       = f.hidden_field :ord_type
-      .input-group.price
+      .input-group.price#bid_price
         label.input-group-addon = t('.price')
         span.label.label-danger.hint-price-disadvantage
         = f.text_field :price, class: 'form-control'
