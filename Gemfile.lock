@@ -523,7 +523,6 @@ DEPENDENCIES
   rails (~> 4.2)
   rails-i18n
   rails-observers
-  rake (< 11.0)
   rbtree
   redis-rails
   rest-client (~> 1.6.8)

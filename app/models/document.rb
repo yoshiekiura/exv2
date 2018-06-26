@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
   TRANSLATABLE_ATTR = [:title, :desc, :keywords, :body]
-  translates *TRANSLATABLE_ATTR
+  # translates *TRANSLATABLE_ATTR
 
   def to_param
     self.key

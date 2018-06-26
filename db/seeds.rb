@@ -27,7 +27,3 @@ if Rails.env == 'development'
   bar_member.tag_list.add 'hero'
   bar_member.save
 end
-
-Market.create(id: "btccny", ask_unit: "btc", bid_unit: "cny", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 2, position: 1, visible: true)
-Market.create(id: "ethcny", ask_unit: "eth", bid_unit: "cny", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 2, position: 1, visible: true)
-Market.create(id: "ethbtc", ask_unit: "eth", bid_unit: "btc", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 4, position: 1, visible: true)

@@ -2,7 +2,7 @@
   flight.compose.mixin @, [OrderInputMixin]
 
   @attributes
-    precision: gon.market.ask_precision
+    precision: gon.market.ask.fixed
     variables:
       input: 'volume'
       known: 'price'
