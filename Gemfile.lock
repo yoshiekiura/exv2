@@ -13,6 +13,13 @@ GIT
     unread (0.4.0)
       activerecord (>= 3)
 
+GIT
+  remote: git://github.com/nerian/bootstrap-wysihtml5-rails.git
+  revision: 3a91af3a0a5929fde564faf8fd679dcbf4d19f1e
+  specs:
+    bootstrap-wysihtml5-rails (0.3.3.8)
+      railties (>= 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -79,8 +86,6 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
-    bootstrap-wysihtml5-rails (0.3.3.8)
-      railties (>= 3.0)
     bourbon (3.2.4)
       sass (~> 3.2)
       thor
@@ -91,7 +96,7 @@ GEM
     byebug (10.0.2)
     callsite (0.0.11)
     cancancan (2.2.0)
-    capybara (3.2.1)
+    capybara (3.3.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -286,7 +291,7 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    power_assert (1.1.2)
+    power_assert (1.1.3)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -460,7 +465,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.2.0.2)
-  bootstrap-wysihtml5-rails
+  bootstrap-wysihtml5-rails!
   bourbon (~> 3.2.3)
   browser (~> 0.8.0)
   bunny (~> 1.2.1)

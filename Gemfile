@@ -49,7 +49,7 @@ gem 'uglifier'
 gem "jquery-rails"
 gem "angularjs-rails"
 gem 'bootstrap-sass', '~> 3.2.0.2'
-gem 'bootstrap-wysihtml5-rails'
+gem 'bootstrap-wysihtml5-rails', github: 'nerian/bootstrap-wysihtml5-rails'
 gem 'font-awesome-sass', '~> 4.2.0'
 gem 'bourbon', '~> 3.2.3'
 gem 'momentjs-rails'
