@@ -10,6 +10,7 @@ module Admin
 
     def show
       @account_versions = AccountVersion.where(account_id: @member.account_ids).order(:id).reverse_order.page params[:page]
+      @id_document = @member.id_document
     end
 
     def toggle
