@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405053726) do
+ActiveRecord::Schema.define(version: 20180619211037) do
 
   create_table "account_versions", force: true do |t|
     t.integer  "member_id"
@@ -195,6 +195,21 @@ ActiveRecord::Schema.define(version: 20150405053726) do
     t.datetime "updated_at"
   end
 
+  create_table "markets", force: true do |t|
+    t.string   "ask_unit",      limit: 5,                                        null: false
+    t.string   "bid_unit",      limit: 5,                                        null: false
+    t.decimal  "ask_fee",                 precision: 7, scale: 6, default: 0.0,  null: false
+    t.decimal  "bid_fee",                 precision: 7, scale: 6, default: 0.0,  null: false
+    t.integer  "ask_precision", limit: 1,                         default: 4,    null: false
+    t.integer  "bid_precision", limit: 1,                         default: 4,    null: false
+    t.integer  "position",                                        default: 0,    null: false
+    t.boolean  "visible",                                         default: true, null: false
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+  end
+
+  add_index "markets", ["ask_unit", "bid_unit"], name: "index_markets_on_ask_unit_and_bid_unit", unique: true, using: :btree
+
   create_table "members", force: true do |t|
     t.string   "sn"
     t.string   "display_name"
@@ -254,7 +269,7 @@ ActiveRecord::Schema.define(version: 20150405053726) do
   create_table "orders", force: true do |t|
     t.integer  "bid"
     t.integer  "ask"
-    t.integer  "currency"
+    t.string   "market_id",      limit: 10
     t.decimal  "price",                     precision: 32, scale: 16
     t.decimal  "volume",                    precision: 32, scale: 16
     t.decimal  "origin_volume",             precision: 32, scale: 16
@@ -273,7 +288,7 @@ ActiveRecord::Schema.define(version: 20150405053726) do
     t.integer  "trades_count",                                        default: 0
   end
 
-  add_index "orders", ["currency", "state"], name: "index_orders_on_currency_and_state", using: :btree
+  add_index "orders", ["market_id", "state"], name: "index_orders_on_market_id_and_state", using: :btree
   add_index "orders", ["member_id", "state"], name: "index_orders_on_member_id_and_state", using: :btree
   add_index "orders", ["member_id"], name: "index_orders_on_member_id", using: :btree
   add_index "orders", ["state"], name: "index_orders_on_state", using: :btree
@@ -410,17 +425,17 @@ ActiveRecord::Schema.define(version: 20150405053726) do
   add_index "tokens", ["type", "token", "expire_at", "is_used"], name: "index_tokens_on_type_and_token_and_expire_at_and_is_used", using: :btree
 
   create_table "trades", force: true do |t|
-    t.decimal  "price",         precision: 32, scale: 16
-    t.decimal  "volume",        precision: 32, scale: 16
+    t.decimal  "price",                    precision: 32, scale: 16
+    t.decimal  "volume",                   precision: 32, scale: 16
     t.integer  "ask_id"
     t.integer  "bid_id"
     t.integer  "trend"
-    t.integer  "currency"
+    t.string   "market_id",     limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ask_member_id"
     t.integer  "bid_member_id"
-    t.decimal  "funds",         precision: 32, scale: 16
+    t.decimal  "funds",                    precision: 32, scale: 16
   end
 
   add_index "trades", ["ask_id"], name: "index_trades_on_ask_id", using: :btree
@@ -428,7 +443,7 @@ ActiveRecord::Schema.define(version: 20150405053726) do
   add_index "trades", ["bid_id"], name: "index_trades_on_bid_id", using: :btree
   add_index "trades", ["bid_member_id"], name: "index_trades_on_bid_member_id", using: :btree
   add_index "trades", ["created_at"], name: "index_trades_on_created_at", using: :btree
-  add_index "trades", ["currency"], name: "index_trades_on_currency", using: :btree
+  add_index "trades", ["market_id"], name: "index_trades_on_market_id", using: :btree
 
   create_table "two_factors", force: true do |t|
     t.integer  "member_id"
