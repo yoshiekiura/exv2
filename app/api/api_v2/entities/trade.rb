@@ -5,7 +5,7 @@ module APIv2
       expose :price
       expose :volume
       expose :funds
-      expose :market_id, as: :market
+      expose :currency, as: :market
       expose :created_at, format_with: :iso8601
 
       expose :side do |trade, options|

@@ -26,7 +26,7 @@ module APIv2
 
       if params[:trade_id] > 0
         from = Time.at k.last[0]
-        trades = Trade.with_market(params[:market])
+        trades = Trade.with_currency(params[:market])
           .where('created_at >= ? AND id < ?', from, params[:trade_id])
           .map(&:for_global)
 
