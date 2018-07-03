@@ -34,7 +34,7 @@ module APIv2
         member_id:     current_user.id,
         ask:           current_market.base_unit,
         bid:           current_market.quote_unit,
-        currency:      current_market.id,
+        market_id:      current_market.id,
         ord_type:      attrs[:ord_type] || 'limit',
         price:         attrs[:price],
         volume:        attrs[:volume],
