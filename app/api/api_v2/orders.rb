@@ -7,13 +7,8 @@ module APIv2
 
     desc 'Get your orders, results is paginated.', scopes: %w(history trade)
     params do
-<<<<<<< HEAD
-      use :auth, :market
-      optional :state, type: String,  default: 'wait', values: Order.state.values, desc: "Filter order by state, default to 'wait' (active orders)."
-=======
       use :market
       optional :state, type: String,  default: 'wait', values: -> { Order.state.values }, desc: "Filter order by state, default to 'wait' (active orders)."
->>>>>>> market_fix
       optional :limit, type: Integer, default: 100, range: 1..1000, desc: "Limit the number of returned orders, default to 100."
       optional :page,  type: Integer, default: 1, desc: "Specify the page of paginated results."
       optional :order_by, type: String, values: %w(asc desc), default: 'asc', desc: "If set, returned orders will be sorted in specific order, default to 'asc'."

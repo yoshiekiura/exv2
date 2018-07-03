@@ -30,8 +30,4 @@ if Rails.env == 'development'
   bar_member.tag_list.add 'vip'
   bar_member.tag_list.add 'hero'
   bar_member.save
-<<<<<<< HEAD
 end
-=======
-end
->>>>>>> market_fix

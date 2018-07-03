@@ -9,14 +9,10 @@ module APIv2
     end
 
     params :market do
-<<<<<<< HEAD
-      requires :market, type: String, values: ::Market.all.map(&:id), desc: ::APIv2::Entities::Market.documentation[:id]
-=======
       requires :market,
                type:   String,
               #  values: -> { Market.pluck(:id) },
                desc:   -> { APIv2::Entities::Market.documentation[:id] }
->>>>>>> market_fix
     end
 
     params :order do
