@@ -4,10 +4,10 @@ describe APIv2::Orders, type: :request do
 
   describe 'GET /api/v2/orders' do
     before do
-      create(:order_bid, currency: 'btccny', price: '11'.to_d, volume: '123.123456789', member: member)
-      create(:order_bid, currency: 'btccny', price: '12'.to_d, volume: '123.123456789', member: member, state: Order::CANCEL)
-      create(:order_ask, currency: 'btccny', price: '13'.to_d, volume: '123.123456789', member: member)
-      create(:order_ask, currency: 'btccny', price: '14'.to_d, volume: '123.123456789', member: member, state: Order::DONE)
+      create(:order_bid, market_id: 'btccny', price: '11'.to_d, volume: '123.123456789', member: member)
+      create(:order_bid, market_id: 'btccny', price: '12'.to_d, volume: '123.123456789', member: member, state: Order::CANCEL)
+      create(:order_ask, market_id: 'btccny', price: '13'.to_d, volume: '123.123456789', member: member)
+      create(:order_ask, market_id: 'btccny', price: '14'.to_d, volume: '123.123456789', member: member, state: Order::DONE)
     end
 
     it 'should require authentication' do
@@ -66,10 +66,15 @@ describe APIv2::Orders, type: :request do
       orders = JSON.parse(response.body)
       expect(orders[0]['id']).to be > orders[1]['id']
     end
+
+    it 'denies access to unverified member' do
+      signed_get '/api/v2/orders', token: unverified_member_token
+      expect(response.code).to eq '401'
+    end
   end
 
   describe 'GET /api/v2/order' do
-    let(:order)  { create(:order_bid, currency: 'btccny', price: '12.326'.to_d, volume: '3.14', origin_volume: '12.13', member: member, trades_count: 1) }
+    let(:order)  { create(:order_bid, market_id: 'btccny', price: '12.326'.to_d, volume: '3.14', origin_volume: '12.13', member: member, trades_count: 1) }
     let!(:trade) { create(:trade, bid: order) }
 
     it 'should get specified order' do
@@ -167,32 +172,33 @@ describe APIv2::Orders, type: :request do
     it 'should set order source to APIv2' do
       member.get_account(:cny).update_attributes(balance: 100_000)
       signed_post '/api/v2/orders', token: token, params: { market: 'btccny', side: 'buy', volume: '12.13', price: '2014' }
+      expect(response).to be_success
       expect(OrderBid.last.source).to eq 'APIv2'
     end
 
     it 'should return cannot lock funds error' do
       old_count = OrderAsk.count
-      signed_post '/api/v2/orders', params: { market: 'btccny', side: 'sell', volume: '12.13', price: '2014' }
+      signed_post '/api/v2/orders', token: token, params: { market: 'btccny', side: 'sell', volume: '12.13', price: '2014' }
       expect(response.code).to eq '400'
       expect(response.body).to eq '{"error":{"code":2002,"message":"Failed to create order. Reason: cannot lock funds (amount: 12.13)"}}'
       expect(OrderAsk.count).to eq old_count
     end
 
     it 'should give a number as volume parameter' do
-      signed_post '/api/v2/orders', params: { market: 'btccny', side: 'sell', volume: 'test', price: '2014' }
+      signed_post '/api/v2/orders', token: token, params: { market: 'btccny', side: 'sell', volume: 'test', price: '2014' }
       expect(response.code).to eq '400'
       expect(response.body).to eq '{"error":{"code":2002,"message":"Failed to create order. Reason: Validation failed: Volume must be greater than 0"}}'
     end
 
     it 'should give a number as price parameter' do
-      signed_post '/api/v2/orders', params: { market: 'btccny', side: 'sell', volume: '12.13', price: 'test' }
+      signed_post '/api/v2/orders', token: token, params: { market: 'btccny', side: 'sell', volume: '12.13', price: 'test' }
       expect(response.code).to eq '400'
       expect(response.body).to eq '{"error":{"code":2002,"message":"Failed to create order. Reason: Validation failed: Price must be greater than 0"}}'
     end
   end
 
   describe 'POST /api/v2/order/delete' do
-    let!(:order) { create(:order_bid, currency: 'btccny', price: '12.326'.to_d, volume: '3.14', origin_volume: '12.13', locked: '20.1082', origin_locked: '38.0882', member: member) }
+    let!(:order) { create(:order_bid, market_id: 'btccny', price: '12.326'.to_d, volume: '3.14', origin_volume: '12.13', locked: '20.1082', origin_locked: '38.0882', member: member) }
 
     context 'succesful' do
       before do
@@ -220,8 +226,8 @@ describe APIv2::Orders, type: :request do
 
   describe 'POST /api/v2/orders/clear' do
     before do
-      create(:order_ask, currency: 'btccny', price: '12.326', volume: '3.14', origin_volume: '12.13', member: member)
-      create(:order_bid, currency: 'btccny', price: '12.326', volume: '3.14', origin_volume: '12.13', member: member)
+      create(:order_ask, market_id: 'btccny', price: '12.326', volume: '3.14', origin_volume: '12.13', member: member)
+      create(:order_bid, market_id: 'btccny', price: '12.326', volume: '3.14', origin_volume: '12.13', member: member)
 
       member.get_account(:btc).update_attributes(locked: '5')
       member.get_account(:cny).update_attributes(locked: '50')

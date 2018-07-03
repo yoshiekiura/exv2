@@ -13,10 +13,11 @@ module APIv2
 
     desc 'Get your executed trades. Trades are sorted in reverse creation order.', scopes: %w(history)
     params do
-      use :auth, :market, :trade_filters
+      use :market, :trade_filters
     end
     get "/trades/my" do
       authenticate!
+      identity_must_be_verified!
 
       trades = Trade.for_member(
         params[:market], current_user,

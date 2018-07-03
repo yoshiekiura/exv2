@@ -24,15 +24,23 @@ module APIv2
     get "/k_with_pending_trades" do
       k = get_k_json
 
+<<<<<<< HEAD
       if params[:trade_id] > 0
         from = Time.at k.last[0]
         trades = Trade.with_currency(params[:market])
           .where('created_at >= ? AND id < ?', from, params[:trade_id])
           .map(&:for_global)
+=======
+      if params[:trade_id] > 0 && k.present?
+        from   = Time.at k.last[0]
+        trades = Trade.with_market(params[:market])
+                      .where('created_at >= ? AND id < ?', from, params[:trade_id])
+                      .map(&:for_global)
+>>>>>>> market_fix
 
-        {k: k, trades: trades}
+        { k: k, trades: trades }
       else
-        {k: k, trades: []}
+        { k: k, trades: [] }
       end
     end
 

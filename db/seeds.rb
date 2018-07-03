@@ -10,6 +10,10 @@ admin_member = Member.find_or_create_by(email: ADMIN_EMAIL)
 admin_member.authentications.build(provider: 'identity', uid: admin_identity.id)
 admin_member.save!
 
+Market.create(id: "btccny", ask_unit: "btc", bid_unit: "cny", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 2, position: 1, visible: true)
+Market.create(id: "ethcny", ask_unit: "eth", bid_unit: "cny", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 2, position: 1, visible: true)
+Market.create(id: "ethbtc", ask_unit: "eth", bid_unit: "btc", ask_fee: 0, bid_fee: 0, ask_precision: 4, bid_precision: 4, position: 1, visible: true)
+
 if Rails.env == 'development'
   NORMAL_PASSWORD = 'Pass@word8'
 
@@ -26,4 +30,8 @@ if Rails.env == 'development'
   bar_member.tag_list.add 'vip'
   bar_member.tag_list.add 'hero'
   bar_member.save
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> market_fix
