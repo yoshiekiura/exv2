@@ -11,8 +11,8 @@ module Private
       @ask = params[:ask]
 
       @market        = current_market
-      @markets       = Market.all.sort
-      @market_groups = @markets.map(&:quote_unit).uniq
+      @markets       = Market.all
+      @market_groups = @markets.map(&:ask_unit).uniq
 
       @bids   = @market.bids
       @asks   = @market.asks
@@ -29,7 +29,7 @@ module Private
     private
 
     def visible_market?
-      redirect_to market_path(Market.first) if not current_market.visible?
+      redirect_to market_path(Market.first) unless current_market.visible?
     end
 
     def set_default_market
@@ -38,7 +38,7 @@ module Private
 
     def set_member_data
       @member = current_user
-      @orders_wait = @member.orders.with_currency(@market).with_state(:wait)
+      @orders_wait = @member.orders.where(market_id: @market).with_state(:wait)
       @trades_done = Trade.for_member(@market.id, current_user, limit: 100, order: 'id desc')
     end
 

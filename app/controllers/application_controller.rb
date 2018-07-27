@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= Market.find_by_id(params[:market]) || Market.find_by_id(cookies[:market_id]) || Market.first
+    @current_market ||= Market.find_by(id: params[:market]) || Market.find_by(id: cookies[:market_id]) || Market.first
   end
 
   def redirect_back_or_settings_page
@@ -113,11 +113,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_gon
-    gon.env = Rails.env
+    gon.enviro = Rails.env
     gon.local = I18n.locale
     gon.market = current_market.attributes
     gon.ticker = current_market.ticker
-    gon.markets = Market.to_hash
+    gon.markets = Market.all.each_with_object({}) { |market, memo| memo[market.id] = market.as_json }
 
     gon.pusher = {
       key:       ENV['PUSHER_KEY'],
@@ -201,7 +201,7 @@ class ApplicationController < ActionController::Base
     end
 
     if current_user
-      gon.current_user = { sn: current_user.sn }
+      gon.cur_user = { sn: current_user.sn }
       gon.accounts = current_user.accounts.inject({}) do |memo, account|
         memo[account.currency] = {
           currency: account.currency,

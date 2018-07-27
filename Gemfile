@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.12'
+gem 'rails', '~> 4.2'
 gem 'rails-i18n'
+gem 'rake', '< 11.0'
 
 gem 'mysql2', '~> 0.3.21'
 gem 'daemons-rails'
@@ -42,15 +43,15 @@ gem 'em-websocket', '~> 0.5.1'
 
 gem 'simple_form', '~> 3.1.0'
 gem 'slim-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails'
 gem 'uglifier'
 gem "jquery-rails"
 gem "angularjs-rails"
 gem 'bootstrap-sass', '~> 3.2.0.2'
 gem 'bootstrap-wysihtml5-rails'
-gem 'font-awesome-sass'
-gem 'bourbon'
+gem 'font-awesome-sass', '~> 4.2.0'
+gem 'bourbon', '~> 3.2.3'
 gem 'momentjs-rails'
 gem 'eco'
 gem 'browser', '~> 0.8.0'
@@ -70,7 +71,7 @@ gem 'simple_captcha2', require: 'simple_captcha'
 gem 'rest-client', '~> 1.6.8'
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker', '~> 1.4.3'
   gem 'mina'
   gem 'mina-slack', github: 'InfraexDev/mina-slack'
@@ -87,13 +88,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
-  gem 'mocha', :require => false
-  gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'mocha', :require => false
   gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
 
   # rspec-rails rely on test-unit if rails version less then 4.1.0
   # but test-unit has been removed from ruby core since 2.2.0
