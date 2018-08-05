@@ -8,11 +8,16 @@ module APIv2
       requires :signature,  type: String,  desc: "The signature of your request payload, generated using your secret key."
     end
 
+
     params :market do
-      requires :market,
-               type:   String,
-               values: -> { Market.pluck(:id) },
-               desc:   -> { APIv2::Entities::Market.documentation[:id] }
+      begin
+        requires :market,
+                 type:   String,
+                 values: -> { Market.pluck(:id) },
+                 desc:   -> { APIv2::Entities::Market.documentation[:id] }
+      rescue => ex
+        Rails.logger.error ex.message
+      end
     end
 
     params :order do
