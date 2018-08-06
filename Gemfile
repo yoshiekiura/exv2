@@ -13,8 +13,9 @@ gem 'json'
 gem 'jbuilder'
 gem 'bcrypt-ruby', '~> 3.1.2'
 
-gem 'doorkeeper', '~> 1.4.1'
+gem 'doorkeeper', '~> 4.3.2'
 gem 'omniauth', '~> 1.8.1'
+gem 'omniauth-identity'
 
 gem 'figaro'
 gem 'hashie'
@@ -40,12 +41,13 @@ gem 'pusher'
 gem 'eventmachine', '~> 1.0.4'
 gem 'em-websocket', '~> 0.5.1'
 
-gem 'simple_form', '~> 3.5.1'
+gem 'simple_form', '~> 4.0.1'
 gem 'slim-rails'
 gem 'sass-rails', '~> 5.0.7'
 gem 'coffee-rails'
 gem 'uglifier'
 gem "jquery-rails"
+gem 'simple_form_extension'
 gem "angularjs-rails"
 gem 'bootstrap-sass', '~> 3.2.0.2'
 gem 'bootstrap-wysihtml5-rails'

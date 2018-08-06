@@ -137,9 +137,15 @@ GEM
     debug_inspector (0.0.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    devise (4.4.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 6.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
-    doorkeeper (1.4.2)
-      railties (>= 3.1)
+    doorkeeper (4.3.2)
+      railties (>= 4.2)
     dotenv (2.5.0)
     dotenv-rails (2.5.0)
       dotenv (= 2.5.0)
@@ -276,7 +282,11 @@ GEM
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
+    omniauth-identity (1.1.1)
+      bcrypt-ruby (~> 3.0)
+      omniauth (~> 1.0)
     open4 (1.3.4)
+    orm_adapter (0.5.0)
     paper_trail (9.2.0)
       activerecord (>= 4.2, < 5.3)
       paper_trail-association_tracking (< 2)
@@ -346,6 +356,10 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rbtree (0.4.2)
+    redactor-rails (0.5.0)
+      devise
+      mime-types
+      orm_adapter
     redis (4.0.1)
     redis-actionpack (5.0.2)
       actionpack (>= 4.0, < 6)
@@ -365,6 +379,9 @@ GEM
       redis (>= 2.2, < 5)
     request_store (1.4.1)
       rack (>= 1.4)
+    responders (2.4.0)
+      actionpack (>= 4.2.0, < 5.3)
+      railties (>= 4.2.0, < 5.3)
     rest-client (1.6.9)
       mime-types (~> 1.16)
     rotp (3.3.1)
@@ -400,6 +417,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selectize-rails (0.12.5)
     selenium-webdriver (3.14.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
@@ -407,9 +425,14 @@ GEM
       activesupport (>= 4.0.0)
     simple_captcha2 (0.4.3)
       rails (>= 4.1)
-    simple_form (3.5.1)
-      actionpack (> 4, < 5.2)
-      activemodel (> 4, < 5.2)
+    simple_form (4.0.1)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+    simple_form_extension (1.4.12)
+      rails (>= 3.1)
+      redactor-rails
+      selectize-rails
+      simple_form
     slim (3.0.9)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
@@ -445,6 +468,8 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
+    warden (1.2.7)
+      rack (>= 1.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -479,7 +504,7 @@ DEPENDENCIES
   daemons-rails
   database_cleaner
   datagrid
-  doorkeeper (~> 1.4.1)
+  doorkeeper (~> 4.3.2)
   dotenv-rails
   easy_table
   eco
@@ -511,6 +536,7 @@ DEPENDENCIES
   momentjs-rails
   mysql2 (~> 0.3.21)
   omniauth (~> 1.8.1)
+  omniauth-identity
   paper_trail (~> 9.2.0)
   paranoid2
   phonelib (~> 0.3.5)
@@ -532,7 +558,8 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_captcha2
-  simple_form (~> 3.5.1)
+  simple_form (~> 4.0.1)
+  simple_form_extension
   slim-rails
   test-unit
   timecop

@@ -1,11 +1,6 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
-# Pick the frameworks you want:
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "sprockets/railtie"
-# require "rails/test_unit/railtie"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -28,7 +23,6 @@ module Peatio
     config.i18n.available_locales = ['en', 'zh-CN', 'ko']
 
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/extras)
-
     #config.assets.precompile += ['bootstrap-datetimepicker.css']
     config.assets.initialize_on_precompile = true
 
