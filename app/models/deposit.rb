@@ -4,7 +4,6 @@ class Deposit < ActiveRecord::Base
   extend Enumerize
 
   include AASM
-  include AASM::Locking
   include Currencible
 
   has_paper_trail on: [:update, :destroy]
